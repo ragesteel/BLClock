@@ -13,6 +13,7 @@ microLED <LED_COUNT, LED_PIN, MLED_NO_CLOCK, LED_WS2812, ORDER_GRB> display;
 
 void setup() {
   display.setBrightness(60);
+  display.clear();
 }
 
 void loop() {
@@ -21,5 +22,6 @@ void loop() {
     display.set(i, mWheel8(counter + i * 255 / LED_COUNT));
   }
   counter += 3;
+  display.show();
   delay(30);
 }

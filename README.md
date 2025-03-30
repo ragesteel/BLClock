@@ -12,3 +12,10 @@ https://community.alexgyver.ru/threads/bolshie-chasy-na-adresnyx-svetodiodax-ws2
 
 Библиотеки
 Подключение в Arduino Studio: Ctrl-Shift-I
+
+
+Адресные светодиоды
+https://alexgyver.ru/ws2812_guide/
+
+Библиотека microLED
+https://alexgyver.ru/microled/
