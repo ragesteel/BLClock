@@ -18,9 +18,15 @@ microLED <LED_COUNT, LED_PIN, MLED_NO_CLOCK, LED_WS2812, ORDER_GRB> display;
 // e  c
 //  dd  
 
-#define CH_EMPTY 10
+#define CH_A 10
+#define CH_B 11
+#define CH_C 12
+#define CH_D 13
+#define CH_E 14
+#define CH_F 15
+#define CH_EMPTY 16
 
-#define MAX_CH 11
+#define MAX_CH 17
 byte DIGITS[MAX_CH] = {
 //   cdefabg  
   0b01111110, // 0
@@ -33,7 +39,14 @@ byte DIGITS[MAX_CH] = {
   0b01000110, // 7
   0b01111111, // 8
   0b01101111, // 9
-  0b00000000, // CH_EMPTY
+  0b01011111, // A
+  0b01111001, // b
+  0b00111100, // C
+  0b01110011, // d
+  0b00111101, // E
+  0b00011101, // F
+//   cdefabg  
+  0b00000000 // CH_EMPTY
 };
 
 void setup() {
