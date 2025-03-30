@@ -88,15 +88,10 @@ void setDigit(byte position, byte value) {
   Serial.println();
   */
   for (byte i = 0; i < LED_SEGMENT; i++) {
-    mData color;
-    if ((digit & 0x1) == 0x1) {
-      color = mGreen;
-    } else {
-      color = mBlack;
+    if ((digit & 0x1) == 0) {
+      display.fill(start, start + LED_PER_SEG - 1, mBlack);
     }
-    for (byte s = 0; s < LED_PER_SEG; s++) {
-      display.set(start++, color);
-    }
+    start += LED_PER_SEG;
     digit = digit >> 1;
   }
 }
