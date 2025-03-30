@@ -18,13 +18,29 @@ microLED <LED_COUNT, LED_PIN, MLED_NO_CLOCK, LED_WS2812, ORDER_GRB> display;
 // e  c
 //  dd  
 
-byte DIGITS[1] = {
-  0b01111110 // 0
+#define CH_EMPTY 10
+
+#define MAX_CH 11
+byte DIGITS[MAX_CH] = {
+//   cdefabg  
+  0b01111110, // 0
+  0b01000010, // 1
+  0b00110111, // 2
+  0b01100111, // 3
+  0b01001011, // 4
+  0b01101101, // 5
+  0b01111101, // 6
+  0b01000110, // 7
+  0b01111111, // 8
+  0b01101111, // 9
+  0b00000000, // CH_EMPTY
 };
 
 void setup() {
   display.setBrightness(60);
   display.clear();
+  display.setCLI(CLI_AVER);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -33,7 +49,18 @@ void loop() {
     display.set(i, mWheel8(counter + i * 255 / LED_COUNT));
   }
   counter += 3;
-  setDigit(3, 0);
+
+  static byte n = 0;
+  static uint32_t last_update = 0;
+  if (millis() - last_update > 500) {
+    last_update = millis();
+    n++;
+    if (n > MAX_CH) {
+      n = 0;
+    }
+  }
+  setDigit(3, n);
+  
   display.show();
   delay(30);
 }
@@ -51,9 +78,18 @@ void setDigit(byte position, byte value) {
   }
 
   byte digit = DIGITS[value];
+  /*
+  Serial.print("Digit: ");
+  Serial.print(digit);
+  Serial.print(", 0x1: ");
+  Serial.print(digit & 0x1);
+  Serial.print(", value: ");
+  Serial.print(value);
+  Serial.println();
+  */
   for (byte i = 0; i < LED_SEGMENT; i++) {
     mData color;
-    if ((digit && 0x1) == 0x1) {
+    if ((digit & 0x1) == 0x1) {
       color = mGreen;
     } else {
       color = mBlack;
